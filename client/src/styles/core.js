@@ -65,6 +65,20 @@ export const StyledButton = styled.button`
     }
 `;
 
+export const StyledScrollButton = styled.button`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border:none;
+    background: transparent;
+    position: -webkit-sticky;
+    position: sticky;
+    bottom: 55px;
+    left: 100%;
+    font-size: 15px;
+
+`;
+
 export const StyledStickyFooterButton = styled.button`
     border: none;
     background-color:${props => (props.color === "red" ? "#D62828" : (props.color === "orange" ? "#F77F00" : (props.color === "blue" ? "#003049" : (props.color === "green" ? "#EAE2B7" : "#ffffff"))))};

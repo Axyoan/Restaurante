@@ -2,14 +2,20 @@ import React from 'react'
 import Header from "../../components/header";
 import Button from "../../components/button";
 import DishCard from "../../components/dishCard"
-import { ColumnContainer, RowContainer, StyledHr, StyledH2, StyledH3 } from "../../styles/core"
+import ScrollButton from "../../components/scrollButton"
+import { ColumnContainer, RowContainer, StyledHr, StyledH2 } from "../../styles/core"
 import StickyFooterButton from '../../components/stickyFooterButton';
 
 function main() {
     const handleClick = (e) => {
         alert("click");
     }
-
+    const handleScroll = () => {
+        window.scroll({
+            top: 0,
+            behavior: 'smooth',
+        });
+    }
     return (
         <>
             <Header />
@@ -31,6 +37,7 @@ function main() {
                 <DishCard title="Fetuccini" price="125" description="Lorem ipsum"
                     onClick={handleClick} />
             </ColumnContainer>
+            <ScrollButton onClick={handleScroll}>scroll up</ScrollButton>
             <StickyFooterButton color="blue" text="Ordenar" />
         </>
     );
