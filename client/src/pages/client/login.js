@@ -12,7 +12,18 @@ function Login() {
     const handleClick = (e) => {
         history.push('/main');
     }
+    /*
+        TEST FOR CONNECTING TO BACKEND
 
+        const [msg, setMsg] = React.useState("null")
+    
+        async function getMsg() {
+            const response = await fetch("http://localhost:3001/test");
+            const json = await response.json();
+            console.log(json);
+            setMsg(json.msg);
+        };
+    */
     return (
         <>
             <Header />

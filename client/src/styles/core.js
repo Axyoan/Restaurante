@@ -47,8 +47,6 @@ export const RowContainer = styled.div`
     column-gap: 2em;
 `
 
-
-
 export const StyledButton = styled.button`
     border: none;
     border-radius: 25px;
