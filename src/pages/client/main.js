@@ -6,6 +6,10 @@ import { ColumnContainer, RowContainer, StyledHr, StyledH2, StyledH3 } from "../
 import StickyFooterButton from '../../components/stickyFooterButton';
 
 function main() {
+    const handleClick = (e) => {
+        alert("click");
+    }
+
     return (
         <>
             <Header />
