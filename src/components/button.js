@@ -1,4 +1,4 @@
-import React, { useImperativeHandle } from "react"
+import React from "react"
 import { StyledButton } from "../styles/core.js"
 
 function Button(props) {

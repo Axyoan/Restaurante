@@ -31,7 +31,7 @@ export const ColumnContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: start;
+    align-items: center;
     height: 50%;
     margin: 5%
     h2{
@@ -66,6 +66,29 @@ export const StyledButton = styled.button`
         box-shadow: 0px 0px 0px 2px ${props => (props.color === "red" ? "#D62828" : (props.color === "orange" ? "#F77F00" : (props.color === "blue" ? "#003049" : (props.color === "green" ? "#EAE2B7" : "#ffffff"))))};
     }
 `;
+
+export const StyledStickyFooterButton = styled.button`
+    border: none;
+    background-color:${props => (props.color === "red" ? "#D62828" : (props.color === "orange" ? "#F77F00" : (props.color === "blue" ? "#003049" : (props.color === "green" ? "#EAE2B7" : "#ffffff"))))};
+    color:${props => ((props.color === "red" || props.color === "blue") ? "#fff" : "#000")};
+    
+    font-size: 25px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0px;
+    transition: background-color .35s linear;
+    position: -webkit-sticky;
+    position: sticky;
+    bottom: 0px;
+    width: 100%;
+    &:active{
+        background: #fff;
+        color: ${props => (props.color === "red" ? "#D62828" : (props.color === "orange" ? "#F77F00" : (props.color === "blue" ? "#003049" : (props.color === "green" ? "#EAE2B7" : "#ffffff"))))};
+    }
+`;
+
 
 export const StyledHr = styled.hr`
     width: 315px;
@@ -104,7 +127,37 @@ export const StyledH3 = styled.h3`
     flex-grow: 0;
     margin: 27px 0px;
 `
+export const StyledCard = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 10px 9px;
+    width: 234px;
+    height: 170px;
+    left: 0px;
+    top: 43px;
 
+    background: #FFFFFF;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
+    border-radius: 15px;
+    order: 1;
+    margin: 27px 0px;
+`
+
+
+export const StyledTitle = styled.div`
+    display: flex;
+    width: 200px;
+    top: 10px;
+    position: relative;
+    background: #EAE2B7;
+    border-radius: 5px;
+    margin: 0px 0px;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+`
 
 
 export const GlobalStyle = createGlobalStyle`
