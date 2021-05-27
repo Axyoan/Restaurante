@@ -1,7 +1,7 @@
 import React from 'react'
 import Header from "../../components/header";
 import Button from "../../components/button";
-import { RowContainer } from "../../styles/core"
+import { RowContainer, StyledHr, StyledH2, StyledH3 } from "../../styles/core"
 
 function main() {
     return (
@@ -10,6 +10,10 @@ function main() {
             <RowContainer>
                 <Button color="green" text="Pedir cuenta" />
                 <Button color="red" text="Necesito ayuda" />
+            </RowContainer>
+            <StyledHr />
+            <RowContainer>
+                <StyledH2>Menú</StyledH2>
             </RowContainer>
         </>
     );

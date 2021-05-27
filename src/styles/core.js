@@ -27,7 +27,7 @@ export const StyledHeader = styled.header`
 `;
 
 
-export const StyledContainer = styled.div`
+export const ColumnContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -65,16 +65,45 @@ export const StyledButton = styled.button`
     &:active{
         box-shadow: 0px 0px 0px 2px ${props => (props.color === "red" ? "#D62828" : (props.color === "orange" ? "#F77F00" : (props.color === "blue" ? "#003049" : (props.color === "green" ? "#EAE2B7" : "#ffffff"))))};
     }
-    /*
-    MISSING HOVER AND CLICK ANIMATIONS
-
-     */
 `;
 
+export const StyledHr = styled.hr`
+    width: 315px;
+    height: 0px;
+    left: 21px;
+    top: 172px;
+`
 
+export const StyledH2 = styled.h2`
+    width: 114px;
+    height: 24px;
+    left: 122px;
+    top: 185px;
 
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 100%;
 
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+`
 
+export const StyledH3 = styled.h3`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    width: 197px;
+    height: 24px;
+    left: 18.5px;
+    top: 0px;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    margin: 27px 0px;
+`
 
 
 

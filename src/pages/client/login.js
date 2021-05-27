@@ -2,7 +2,7 @@ import React from 'react'
 import Header from '../../components/header'
 import { StyledTextInput } from '../../components/textInput.js';
 import Button from '../../components/button'
-import { StyledContainer } from "../../styles/core.js";
+import { ColumnContainer } from "../../styles/core.js";
 import { useHistory } from "react-router-dom";
 
 
@@ -16,11 +16,11 @@ function Login() {
     return (
         <>
             <Header />
-            <StyledContainer>
+            <ColumnContainer>
                 <h2>Ingrese código</h2>
                 <StyledTextInput />
                 <Button color="orange" text="Confirmar" onClick={handleClick} />
-            </StyledContainer>
+            </ColumnContainer>
         </>
     );
 }
