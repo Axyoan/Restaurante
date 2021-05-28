@@ -4,24 +4,30 @@ import Header from "../../components/header";
 import Button from "../../components/button";
 import DishCard from "../../components/dishCard"
 import ScrollButton from "../../components/scrollButton"
-import { ColumnContainer, RowContainer, StyledHr, StyledH2 } from "../../styles/core"
 import StickyFooterButton from '../../components/stickyFooterButton';
+import { ColumnContainer, RowContainer, StyledHr, StyledH2 } from "../../styles/core"
+import { DishModal } from "../../styles/modals"
+import { StyledNumberInput } from '../../styles/inputs';
 
 Modal.setAppElement('#root');
 
 function Main() {
     const [modalIsOpen, setIsOpen] = useState(false);
-    const [dishName, setDishName] = useState("");
+    const [dish, setDish] = useState({ name: "", price: null, id: null });
+    const [quantity, setQuantity] = useState(0);
 
     function openModal(data) {
+        setQuantity(0);
         setIsOpen(true);
-        setDishName(data);
+        setDish({ id: data.id, name: data.name, price: data.price });
     }
-    function afterOpenModal() {
-
-    }
-
-    function closeModal() {
+    function closeModal(willAdd) {
+        if (willAdd && quantity !== null && quantity !== 0) {
+            console.log("dish added")
+        }
+        else {
+            console.log("canceled")
+        }
         setIsOpen(false);
     }
 
@@ -37,20 +43,24 @@ function Main() {
         return (
             <ColumnContainer>
                 <DishCard title="Guacamole" price="50" description="Lorem ipsum"
-                    onClick={() => openModal(1)}
+                    onClick={() => openModal({ name: "Guacamole", price: 50, id: 1 })}
                 />
                 <DishCard title="Queso fundido" price="40" description="Lorem ipsum"
-                    onClick={() => openModal(2)}
+                    onClick={() => openModal({ name: "Queso fundido", price: 40, id: 2 })}
                 />
                 <DishCard title="Fetuccini" price="125" description="Lorem ipsum"
-                    onClick={() => openModal(3)} />
-            </ColumnContainer >
+                    onClick={() => openModal({ name: "Fetuccini", price: 125, id: 3 })} />
+            </ColumnContainer>
         );
     };
 
+    const handleNumberInput = (e) => {
+        setQuantity(e.target.value);
+        console.log(quantity);
+    }
+
     useEffect(() => {
         console.log("I have been mounted")
-
     }, [])
 
     return (
@@ -67,9 +77,23 @@ function Main() {
             {loadDishes()}
 
             <Modal isOpen={modalIsOpen}
-                onAfterOpen={afterOpenModal}
-                onRequestClose={closeModal}>
-                {dishName}
+                onRequestClose={closeModal}
+                style={DishModal}
+            >
+                <h4>
+                    Añadir al pedido:
+                    </h4>
+                {dish.name}
+                <StyledHr />
+                <RowContainer>
+                    Cantidad:
+                    <StyledNumberInput onChange={handleNumberInput} />
+                </RowContainer>
+                <RowContainer>
+                    <Button text="Cancelar" color="red" onClick={() => closeModal(false)}></Button>
+                    <Button text="Confirmar" color="green" onClick={() => closeModal(true)}></Button>
+                </RowContainer>
+
             </Modal>
             <ScrollButton onClick={handleScroll}>scroll up</ScrollButton>
             <StickyFooterButton color="blue" text="Ordenar" />

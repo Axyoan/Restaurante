@@ -101,13 +101,18 @@ export const StyledStickyFooterButton = styled.button`
     }
 `;
 
-
 export const StyledHr = styled.hr`
-    width: 315px;
+    width: 80%;
+    width: ${props => (props.widthPx)}px;
+    width: ${props => (props.widthPercentage)}%;
     height: 0px;
     left: 21px;
     top: 172px;
 `
+
+
+
+
 
 export const StyledH2 = styled.h2`
     width: 114px;
