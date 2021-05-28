@@ -34,9 +34,6 @@ export const ColumnContainer = styled.div`
     align-items: center;
     height: 50%;
     margin: 5%
-    h2{
-        margin-bottom: 25px;
-    }
 `
 export const RowContainer = styled.div`
     display: flex;
@@ -83,16 +80,15 @@ export const StyledStickyFooterButton = styled.button`
     border: none;
     background-color:${props => (props.color === "red" ? "#D62828" : (props.color === "orange" ? "#F77F00" : (props.color === "blue" ? "#003049" : (props.color === "green" ? "#EAE2B7" : "#ffffff"))))};
     color:${props => ((props.color === "red" || props.color === "blue") ? "#fff" : "#000")};
-    
     font-size: 25px;
-    display: flex;
+    display: -webkit-flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     padding: 10px 0px;
     transition: background-color .35s linear;
-    position: -webkit-sticky;
     position: sticky;
+    position: -webkit-sticky;
     bottom: 0px;
     width: 100%;
     &:active{
@@ -100,6 +96,12 @@ export const StyledStickyFooterButton = styled.button`
         color: ${props => (props.color === "red" ? "#D62828" : (props.color === "orange" ? "#F77F00" : (props.color === "blue" ? "#003049" : (props.color === "green" ? "#EAE2B7" : "#ffffff"))))};
     }
 `;
+
+export const StyledIconButton = styled.button`
+    border: none;
+    background: transparent;
+`;
+
 
 export const StyledHr = styled.hr`
     width: 80%;
@@ -111,11 +113,7 @@ export const StyledHr = styled.hr`
 `
 
 
-
-
-
 export const StyledH2 = styled.h2`
-    width: 114px;
     height: 24px;
     left: 122px;
     top: 185px;
@@ -175,7 +173,80 @@ export const StyledTitle = styled.div`
     justify-content: space-between;
     align-items: center;
 `
+export const StyledTable = styled.table`
+    position: static;
+    thead{
+        td{
+            text-align: center;
+            line-height: 200%;
+            font-size: 16px;
+            font-weight: 600;
+        }
+    }
+    tbody{
+        td{
+            text-align: center;
+            font-size: 16px;
+            font-weight: 200;
+            padding: 1px 7px;
+            vertical-align:middle;
 
+        }
+        td:first-of-type{
+            margin: 0;
+            padding: 0;
+            width: 10%;
+        }
+        td:nth-of-type(2){
+            border-right: 2px dotted black;
+            padding-left: 1px;
+            width: 10%;
+        }
+        td:nth-of-type(3){
+            width: 70%;
+        }
+        td:nth-of-type(4){
+            width: 10%;
+        }
+    }
+
+`
+
+export const StyledBillTable = styled.table`
+    position: static;
+    display: block;
+    margin: 1em 0em;
+    thead{
+        td{
+            text-align: center;
+            line-height: 200%;
+            font-size: 16px;
+            font-weight: 600;
+        }
+    }
+    tbody{
+        td{
+            text-align: center;
+            font-size: 16px;
+            font-weight: 200;
+            padding: 1px 7px;
+            vertical-align:middle;
+
+        }
+        td:first-of-type{
+            border-right: 2px dotted black;
+            padding-left: 1px;
+            width: 10%;
+        }
+        td:nth-of-type(2){
+            width: 80%;
+        }
+        td:nth-of-type(3){
+            width: 10%;
+        }
+}
+
+`
 
 export const GlobalStyle = createGlobalStyle`
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;900&display=swap');

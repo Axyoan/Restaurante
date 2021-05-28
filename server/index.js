@@ -2,6 +2,17 @@ const express = require('express');
 const app = express();
 const port = 3001;
 
+app.enable("trust proxy");
+
+//May be necesary to put in the bottom-----------------------------
+app.use(function (req, res, next) {
+    res.setHeader("Access-Control-Allow-Origin", `http://localhost:${3000}`);   
+})
+//-------------------------------------------------------------------
+
+app.use(express.json())
+
+
 app.get('/test', (req, res) => {
     res.setHeader("Access-Control-Allow-Origin", `http://localhost:${3000}`);
     console.log("sending msg");
