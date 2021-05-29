@@ -101,12 +101,14 @@ Shows information about the restaurant, name and image (_not currently implement
 <hr/>
 
 ## Colors
+https://coolors.co/003049-d62828-f77f00-fcbf49-eae2b7
+
 <div style="font-size:30px">
-<div style="background-color: #003049; color:white">#003049      </div>
-<div style="background-color: #D62828; color:white">#D62828</div>
-<div style="background-color: #F77F00">#F77F00</div>
-<div style="background-color: #FCBF49">#FCBF49</div>
-<div style="background-color: #EAE2B7">#EAE2B7</div>
+<div style="background-color: #003049; color:white">#003049 Blue</div>
+<div style="background-color: #D62828; color:white">#D62828 Red</div>
+<div style="background-color: #F77F00">#F77F00 Orange</div>
+<div style="background-color: #FCBF49">#FCBF49 Yellow</div>
+<div style="background-color: #EAE2B7">#EAE2B7 Green</div>
 </div>
 
 ## Packages used
