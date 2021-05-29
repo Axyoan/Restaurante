@@ -125,6 +125,15 @@ For routing
 
 Routes are registered inside client/src/app.js
 
+Redirecting is achieved by the following steps:
+
+
+1. Put `import { useHistory } from "react-router-dom";` at the top of the page from where you want to redirect (the source)
+2. Define a variable `const history = useHistory();` Inside the functional component
+3. Use `history.push('/destination')` to redirect to destination;
+
+You can find an example of this on /client/src/pages/client/login
+
 https://www.npmjs.com/package/react-router-dom
 
 #### React Modal
