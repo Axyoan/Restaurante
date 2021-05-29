@@ -323,7 +323,7 @@ function Main() {
                 </Modal>
             </Modal>
 
-            <ScrollButton onClick={handleScroll}>scroll up</ScrollButton>
+            <ScrollButton onClick={handleScroll} />
             <StickyFooterButton color="blue" text="Ver tu orden" onClick={openOrderModal} />
         </>
     );

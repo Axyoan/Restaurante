@@ -142,7 +142,7 @@ export const StyledH3 = styled.h3`
     flex-grow: 0;
     margin: 27px 0px;
 `
-export const StyledCard = styled.div`
+export const Styled  = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;

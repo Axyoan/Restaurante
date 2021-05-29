@@ -6,7 +6,7 @@ import CardTitle from "./cardTitle"
 function DishCard(props) {
     return (
         <StyledCard onClick={props.onClick}>
-            <CardTitle title={props.title} price={props.price}></CardTitle>
+            <CardTitle title={props.title} price={props.price} />
             {props.description}
         </StyledCard>
     );
