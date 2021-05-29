@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import Login from "./pages/client/login"
+import Login from "./pages/login"
 import Main from "./pages/client/main"
 import { GlobalStyle } from "./styles/core.js"
 
