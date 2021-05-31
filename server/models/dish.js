@@ -5,7 +5,8 @@ const DishSchema = new Schema({
     name: String,
     description: String,
     price: Number,
-    category: String,
+    category: { type: String, lowercase: true },
+    image: Buffer
 });
 
 module.exports = mongoose.model('Dish', DishSchema);

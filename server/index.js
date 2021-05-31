@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require("mongoose");
 const cors = require("cors");
+require('dotenv').config()
 const dish = require("./routes/dish");
 const waiter = require('./routes/waiter');
 const table = require('./routes/table');
@@ -35,6 +36,7 @@ app.get('/test', (req, res) => {
     console.log("sending msg");
     return res.json({ msg: "This message comes from Express" })
 });
+
 
 app.all("*", (req, res, next) => {
     console.log("404");

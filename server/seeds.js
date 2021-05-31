@@ -72,7 +72,8 @@ const seedWaiters = [
         phone: "33-1029-3847",
         adress: "Calle 5 No. 123",
         email: "jperez@gmail.com",
-
+        code: "admin",
+        password: "123",
     },
     {
         name: {
@@ -86,7 +87,8 @@ const seedWaiters = [
         phone: "33-5647-3829",
         adress: "Juarez No. 38",
         email: "correochido@hotmail.com",
-
+        code: "admin",
+        password: "123",
     },
     {
         name: {
@@ -100,7 +102,8 @@ const seedWaiters = [
         phone: "33-5546-1523",
         adress: "Insurgentes no. 1003",
         email: "guen@gmail.com",
-
+        code: "admin",
+        password: "123",
     },
     {
         name: {
@@ -114,7 +117,8 @@ const seedWaiters = [
         phone: "33-1927-3441",
         adress: "Chamizal no. 53",
         email: "ahfer@protonmail.com",
-
+        code: "admin",
+        password: "123",
     },
 ]
 

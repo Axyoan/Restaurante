@@ -13,7 +13,18 @@ const TableSchema = new Schema({
             }
         ]
     },
-    order: {
+    pendingOrders: {
+        order: [{
+            dishes: [
+                {
+                    name: String,
+                    quantity: Number,
+                    price: Number
+                }
+            ]
+        }]
+    },
+    currentOrder: {
         dishes: [
             {
                 name: String,

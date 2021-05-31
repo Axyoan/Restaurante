@@ -13,6 +13,9 @@ const WaiterSchema = new Schema({
     phone: String,
     adress: String,
     email: String,
+    image: Buffer,
+    code: String,
+    password: String,
     assignedTables: [{
         tableId: mongoose.ObjectId
     }]
