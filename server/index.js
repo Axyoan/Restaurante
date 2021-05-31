@@ -1,28 +1,45 @@
 const express = require('express');
-const app = express();
+const mongoose = require("mongoose");
+const cors = require("cors");
+const dish = require("./routes/dish");
+const waiter = require('./routes/waiter');
+const table = require('./routes/table');
+
 const port = 3001;
+const clientPort = 3000;
 
-app.enable("trust proxy");
-
-//May be necesary to put in the bottom-----------------------------
-app.use(function (req, res, next) {
-    res.setHeader("Access-Control-Allow-Origin", `http://localhost:${3000}`);   
+mongoose.connect("mongodb://localhost:27017/restaurant", {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true,
 })
-//-------------------------------------------------------------------
+mongoose.set('useFindAndModify', false);
 
-app.use(express.json())
-
-
-app.get('/test', (req, res) => {
-    res.setHeader("Access-Control-Allow-Origin", `http://localhost:${3000}`);
-    console.log("sending msg");
-    return res.json({ msg: "This message comes from Express", num: 7 })
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error:"));
+db.once("open", () => {
+    console.log("Database connected");
 });
 
-app.get("/testNodemon", (req, res) => {
-    return res.json("nodemon works");
-})
+const app = express();
 
+app.use(cors({ origin: `http://localhost:${clientPort}` }));
+
+app.use(express.json());
+
+app.use("/dishes", dish);
+app.use('/waiters', waiter);
+app.use('/tables', table);
+
+app.get('/test', (req, res) => {
+    console.log("sending msg");
+    return res.json({ msg: "This message comes from Express" })
+});
+
+app.all("*", (req, res, next) => {
+    console.log("404");
+    return res.send("404 error");
+})
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
