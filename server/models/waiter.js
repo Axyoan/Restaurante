@@ -11,14 +11,21 @@ const WaiterSchema = new Schema({
     birthDate: Date,
     startDate: Date,
     phone: String,
-    adress: String,
+    address: String,
     email: String,
     image: Buffer,
     code: String,
     password: String,
-    assignedTables: [{
-        tableId: mongoose.ObjectId
-    }]
+    assignedTables: [{ tableId: String, }],
+    notifications: [{
+        category: {
+            type: String,
+            enum: ['cuenta', 'ayuda', 'orden']
+        },
+        orderId: String,
+        resolved: Boolean,
+    }
+    ]
 });
 
 module.exports = mongoose.model("Waiter", WaiterSchema);

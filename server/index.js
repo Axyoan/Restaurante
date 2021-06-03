@@ -40,7 +40,7 @@ app.get('/test', (req, res) => {
 
 app.all("*", (req, res, next) => {
     console.log("404");
-    return res.send("404 error");
+    return res.status(404).send("404 error");
 })
 
 app.listen(port, () => {
