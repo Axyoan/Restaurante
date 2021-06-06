@@ -1,17 +1,38 @@
-import React from 'react'
+import React, {useState} from 'react'
+import Modal from 'react-modal';
 import Header from '../components/header'
-import { StyledTextInput } from '../styles/inputs.js';
+import { StyledTextInput, StyledPassTextInput } from '../styles/inputs.js';
 import Button from '../components/button'
-import { ColumnContainer } from "../styles/core.js";
+import { ColumnContainer, StyledHr } from "../styles/core.js";
 import { useHistory } from "react-router-dom";
-
+import { PasswordModal } from "../styles/modals";
 
 function Login() {
     const history = useHistory();
+    const [waiterPassModalIsOpen, setWaiterPassModalIsOpen] = useState(false);
 
     const handleClick = (e) => {
-        history.push('/main');
+        //validate code if its from a table
+        //history.push('/main');
+
+        //if its a waiter's code:
+        setWaiterPassModalIsOpen(true);
+        
+        
     }
+
+    const closeModalPass = () => {
+        
+        
+        //correct password
+        history.push('/mainW');
+
+        /* incorrect password
+        
+         show something saying tas pendejo. */
+         setWaiterPassModalIsOpen(false);
+    }
+
     /*
         TEST FOR CONNECTING TO BACKEND
 
@@ -32,6 +53,23 @@ function Login() {
                 <StyledTextInput />
                 <Button color="orange" text="Confirmar" onClick={handleClick} />
             </ColumnContainer>
+
+
+             {/*WAITER'S PASSWORD MODAL-------------------- */}
+             <Modal
+                isOpen={waiterPassModalIsOpen}
+                onRequestClose={closeModalPass}
+                style={PasswordModal}
+            >
+                <h4>
+                    Ingrese contraseña:
+                    </h4>
+                <ColumnContainer>
+                    <StyledPassTextInput />
+                    <Button color="orange" text="Iniciar sesión" onClick={closeModalPass} />
+                </ColumnContainer>
+
+            </Modal>
         </>
     );
 }
