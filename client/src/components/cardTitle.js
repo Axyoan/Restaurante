@@ -5,11 +5,11 @@ function CardTitle(props) {
     return (
         <StyledTitle>
             <h4>
-                {props.title}
+                {props.name}
             </h4>
-            <h4>
+            <h5>
                 ${props.price}
-            </h4>
+            </h5>
         </StyledTitle>
     );
 }

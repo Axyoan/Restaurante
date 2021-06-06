@@ -1,28 +1,22 @@
-import React, {useState} from 'react'
+import React, {useState} from 'react';
 import Modal from 'react-modal';
-import Header from '../components/header'
+import axios from 'axios';
+import Header from '../components/header';
 import { StyledTextInput, StyledPassTextInput } from '../styles/inputs.js';
-import Button from '../components/button'
-import { ColumnContainer, StyledHr } from "../styles/core.js";
+import Button from '../components/button';
+import { ColumnContainer, StyledHr, StyledWarning } from "../styles/core.js";
 import { useHistory } from "react-router-dom";
 import { PasswordModal } from "../styles/modals";
 
 function Login() {
+    const [code, setCode] = useState(null);
+    const [showError, setShowError] = useState(false);
     const history = useHistory();
     const [waiterPassModalIsOpen, setWaiterPassModalIsOpen] = useState(false);
 
-    const handleClick = (e) => {
-        //validate code if its from a table
-        //history.push('/main');
 
-        //if its a waiter's code:
-        setWaiterPassModalIsOpen(true);
-        
-        
-    }
 
     const closeModalPass = () => {
-        
         
         //correct password
         history.push('/mainW');
@@ -33,25 +27,50 @@ function Login() {
          setWaiterPassModalIsOpen(false);
     }
 
-    /*
-        TEST FOR CONNECTING TO BACKEND
+    const handleInput = (e) => {
+        setCode(e.target.value);
+        console.log(code);
+    }
 
-        const [msg, setMsg] = React.useState("null")
-    
-        async function getMsg() {
-            const response = await fetch("http://localhost:3001/test");
-            const json = await response.json();
-            console.log(json);
-            setMsg(json.msg);
-        };
-    */
+
+    const handleClick = async (e) => {
+        if (!code) {
+            setShowError(true);
+        } else if (/^[a-zA-Z]{4}$/.test(code)) {
+            ///TABLE CODE
+            const realCode = code.toUpperCase();
+            const res = await axios.get(
+                `${process.env.REACT_APP_API_URL}tables/`, { params: { code: realCode } }
+            );
+            const table = res.data;
+            if (table) {
+                history.push({ pathname: '/main', state: realCode });
+            }
+            setShowError(true);
+        } else if (/^[0-9]{6}$/.test(code)) {
+            ///WAITER CODE
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}waiters/`);
+            const waiters = res.data;
+            console.log(waiters);
+            for (const w of waiters) {
+                if (code === w.code) {
+                    setWaiterPassModalIsOpen(true);
+                    //history.push('/main');
+                }
+            }
+        } else {
+            setShowError(true);
+        }
+        return;
+    }
     return (
         <>
             <Header />
             <ColumnContainer>
                 <h2>Ingrese código</h2>
-                <StyledTextInput />
+                <StyledTextInput onChange={handleInput} />
                 <Button color="orange" text="Confirmar" onClick={handleClick} />
+                {showError && <StyledWarning>Código incorrecto</StyledWarning>}
             </ColumnContainer>
 
 

@@ -170,14 +170,16 @@ export const StyledCard = styled.div`
     align-items: center;
     padding: 10px 9px;
     width: 234px;
-    height: 170px;
+    height: 100%;
     left: 0px;
     top: 43px;
-
-    background: #FFFFFF;
+    text-align: center;
+    font-size: 19px;
     box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
     border-radius: 15px;
     order: 1;
+    background: white;
+    line-height: 1.1
     margin: 27px 0px;
 `
 
@@ -186,13 +188,17 @@ export const StyledTitle = styled.div`
     display: flex;
     width: 200px;
     top: 10px;
-    position: relative;
     background: #EAE2B7;
     border-radius: 5px;
-    margin: 0px 0px;
+    margin-bottom: 1em;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    text-align: center;
+    line-height: 1.2;
+    h5{
+        font-weight: 200;
+    }
 `
 export const StyledTable = styled.table`
     position: static;
@@ -266,6 +272,7 @@ export const StyledBillTable = styled.table`
     position: static;
     display: block;
     margin: 1em 0em;
+    line-height: 1.3em;
     thead{
         td{
             text-align: center;
@@ -294,9 +301,19 @@ export const StyledBillTable = styled.table`
         td:nth-of-type(3){
             width: 10%;
         }
-}
+}`
 
+
+export const StyledWarning = styled.div`
+    background: #D62828;
+    padding: 1em 1em;
+    margin: 1em 1em;
+    text-align: center;
+    color: white;
+    font-weight: 400;
+    border-radius: 25px;
 `
+
 
 export const GlobalStyle = createGlobalStyle`
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;900&display=swap');
