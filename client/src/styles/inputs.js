@@ -7,6 +7,9 @@ export const StyledTextInput = styled.input.attrs({
     margin-bottom: 25px;
     width: 80%
 `
+export const StyledTextArea = styled.textarea`
+    font-size: 16px;
+`
 
 export const StyledPassTextInput = styled.input.attrs({
     type: "password"
@@ -27,6 +30,20 @@ export const StyledNumberInput = styled.input.attrs({
     box-shadow: inset 2px 2px 2px rgba(0, 0, 0, 0.25);
     border-radius: 3px;
 `
+export const StyledNumberInput2 = styled.input.attrs({
+    type: "number",
+    min: 1,
+    max: 1000,
+})`
+    width: 100px;
+    height: 2em;
+    font-size: 16px;
+    border: 0.5px solid #000000;
+    box-sizing: border-box;
+    box-shadow: inset 2px 2px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 3px;
+`
+
 export const StyledSearchTextInput = styled.input.attrs({
     type: "text"
 })`
@@ -52,7 +69,7 @@ export const StyledCheckBox = styled.input.attrs({
 
 export const StyledSelectBox = styled.select`
     width: 100px;
-    height: 20px;
+    height: 2.5em;
     font-size: 15px;
     option {
         font-size: 15px;
@@ -60,7 +77,6 @@ export const StyledSelectBox = styled.select`
         font-weight: small;
         display: flex;
         white-space: pre;
-        
       }
 `
 export const StyledTextInput2 = styled.input.attrs({

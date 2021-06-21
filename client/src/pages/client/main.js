@@ -42,7 +42,6 @@ function Main(props) {
                 newOrder.find(x => x.dishId === dish.dishId).quantity += dish.quantity;
                 setOrder(newOrder);
                 updateCurrentOrderDB(newOrder);
-
             }
             else {
                 const newOrder = [...order, dish];
@@ -68,6 +67,8 @@ function Main(props) {
                 {
                     notifications: [...waiter.notifications, {
                         category: 'ayuda',
+                        tableNumber: table.number,
+                        tableCode: table.code,
                         orderId: null,
                         resolved: false,
                     }]
@@ -114,6 +115,8 @@ function Main(props) {
                 {
                     notifications: [...waiter.notifications, {
                         category: 'orden',
+                        tableNumber: table.number,
+                        tableCode: table.code,
                         orderId: newOrderId,
                         resolved: false,
                     }]
@@ -167,6 +170,8 @@ function Main(props) {
                     {
                         notifications: [...waiter.notifications, {
                             category: 'cuenta',
+                            tableNumber: table.number,
+                            tableCode: table.code,
                             orderId: null,
                             resolved: false,
                         }]
@@ -339,7 +344,6 @@ function Main(props) {
         setDishList(newDishList);
     }
 
-
     const loadTableInfo = async () => {
         console.log("loadTableInfo")
         const res = await axios.get(
@@ -473,7 +477,6 @@ function Main(props) {
         </>
     );
 }
-
 
 export default Main
 

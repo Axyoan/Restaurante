@@ -1,20 +1,23 @@
-import React, {useState} from "react"
+import React, { useEffect, useState } from "react"
 import { StyledSimpleCard } from "../styles/core.js"
 
 function SimpleCardChangeColor(props) {
-    const [actColor, setActColor] = useState("#FFFFF");
-    const bnClick = (ef) => {
-        setActColor(ef);
-        //console.log(ef);
-    };
-    // ADD THE IMAGE(?
+    const [actColor, setActColor] = useState("#fff");
+    useEffect(() => {
+        setActColor(props.color);
+        console.log(props.text);
+        console.log(props.color);
+    }, [])
 
     return (
-        <>{console.log("un mensaje") }
-        <StyledSimpleCard color ={actColor} onClick ={() =>bnClick(props.changeColor)}>
+        <StyledSimpleCard color={actColor}
+            onClick={() => {
+                setActColor(props.changeColor);
+                props.onClick();
+            }}
+        >
             {props.text}
         </StyledSimpleCard>
-        </>
     );
 
 }

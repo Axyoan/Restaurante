@@ -1,30 +1,35 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Modal from 'react-modal';
 import axios from 'axios';
 import Header from '../components/header';
 import { StyledTextInput, StyledPassTextInput } from '../styles/inputs.js';
 import Button from '../components/button';
-import { ColumnContainer, StyledHr, StyledWarning } from "../styles/core.js";
+import { ColumnContainer, RowContainer, StyledWarning } from "../styles/core.js";
 import { useHistory } from "react-router-dom";
 import { PasswordModal } from "../styles/modals";
 
 function Login() {
+    const [id, setId] = useState(null)
     const [code, setCode] = useState(null);
+    const [pass, setPass] = useState(null);
     const [showError, setShowError] = useState(false);
-    const history = useHistory();
+    const [showPassError, setShowPassError] = useState(false);
     const [waiterPassModalIsOpen, setWaiterPassModalIsOpen] = useState(false);
+    const history = useHistory();
 
 
 
     const closeModalPass = () => {
-        
-        //correct password
-        history.push('/mainW');
+        setWaiterPassModalIsOpen(false);
+    }
 
-        /* incorrect password
-        
-         show something saying tas pendejo. */
-         setWaiterPassModalIsOpen(false);
+    const loginWaiter = async () => {
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}waiters/${id}`);
+        const waiter = res.data;
+        if (waiter.password === pass) {
+            history.push({ pathname: '/mainW', state: id });
+        }
+        setShowPassError(true);
     }
 
     const handleInput = (e) => {
@@ -32,6 +37,10 @@ function Login() {
         console.log(code);
     }
 
+    const handlePass = (e) => {
+        setPass(e.target.value);
+        console.log(pass);
+    }
 
     const handleClick = async (e) => {
         if (!code) {
@@ -54,8 +63,8 @@ function Login() {
             console.log(waiters);
             for (const w of waiters) {
                 if (code === w.code) {
+                    setId(w._id);
                     setWaiterPassModalIsOpen(true);
-                    //history.push('/main');
                 }
             }
         } else {
@@ -65,6 +74,7 @@ function Login() {
     }
     return (
         <>
+            {console.log("RENDERED")}
             <Header />
             <ColumnContainer>
                 <h2>Ingrese código</h2>
@@ -74,8 +84,8 @@ function Login() {
             </ColumnContainer>
 
 
-             {/*WAITER'S PASSWORD MODAL-------------------- */}
-             <Modal
+            {/*WAITER'S PASSWORD MODAL-------------------- */}
+            <Modal
                 isOpen={waiterPassModalIsOpen}
                 onRequestClose={closeModalPass}
                 style={PasswordModal}
@@ -84,8 +94,12 @@ function Login() {
                     Ingrese contraseña:
                     </h4>
                 <ColumnContainer>
-                    <StyledPassTextInput />
-                    <Button color="orange" text="Iniciar sesión" onClick={closeModalPass} />
+                    <StyledPassTextInput onChange={handlePass} />
+                    <RowContainer>
+                        <Button color="red" text="Cancelar" onClick={closeModalPass} />
+                        <Button color="orange" text="Iniciar sesión" onClick={loginWaiter} />
+                    </RowContainer>
+                    {showPassError && <StyledWarning>Contraseña incorrecta</StyledWarning>}
                 </ColumnContainer>
 
             </Modal>

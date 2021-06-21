@@ -125,31 +125,38 @@ const seedWaiters = [
 const seedTables = [
     {
         number: 1,
-        code: "AFXZ"
+        code: "AFXZ",
+        section: 'rojo'
     },
     {
         number: 2,
-        code: "QECS"
+        code: "QECS",
+        section: 'amarillo'
     },
     {
         number: 3,
-        code: "REKT"
+        code: "REKT",
+        section: 'verde'
     },
     {
         number: 4,
-        code: "MERN"
+        code: "MERN",
+        section: 'rojo'
     },
     {
         number: 5,
-        code: "UWWU"
+        code: "UWWU",
+        section: 'amarillo'
     },
     {
         number: 6,
-        code: "DOGS"
+        code: "DOGS",
+        section: 'rojo'
     },
     {
         number: 7,
-        code: "CATS"
+        code: "CATS",
+        section: 'verde'
     },
 ]
 

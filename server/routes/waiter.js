@@ -1,12 +1,11 @@
-express = require('express');
-router = express.Router();
-crypto = require("crypto");
-mongoose = require('mongoose');
-nodemailer = require('nodemailer');
-var generator = require('generate-password');
+const express = require('express');
+const router = express.Router();
+const crypto = require("crypto");
+const mongoose = require('mongoose');
+const nodemailer = require('nodemailer');
+const generator = require('generate-password');
 require("../reqError");
-waiter = require('../models/waiter');
-Waiter = require("../models/waiter")
+const Waiter = require('../models/waiter');
 
 
 validateId = async (id) => {
@@ -47,10 +46,16 @@ validateFields = async (req) => {
 ///INDEX
 router.get("/", async (req, res, next) => {
     try {
-        const { tableId } = req.query;
+        const { tableId, queryCode: code } = req.query;
         if (tableId) {
             const waiters = await Waiter.find(
                 { assignedTables: { $elemMatch: { tableId: tableId } } }).exec();
+            return res.json(waiters);
+        }
+        if (code) {
+            const waiters = await Waiter.findOne(
+                { code: queryCode }
+            )
             return res.json(waiters);
         }
         waiters = await Waiter.find({}).exec();
@@ -119,7 +124,7 @@ router.post("/", async (req, res, next) => {
 ///UPDATE
 router.put("/:id", async (req, res, next) => {
     try {
-        updatedWaiter = await waiter.findByIdAndUpdate(req.params.id, req.body).exec();
+        updatedWaiter = await Waiter.findByIdAndUpdate(req.params.id, req.body).exec();
         res.json(updatedWaiter);
     } catch (err) {
         return next(err);
@@ -130,7 +135,7 @@ router.put("/:id", async (req, res, next) => {
 router.patch("/:id", async (req, res, next) => {
     try {
         console.log("patch waiter")
-        updatedWaiter = await waiter.findById(req.params.id).exec();
+        updatedWaiter = await Waiter.findById(req.params.id).exec();
         if (req.body.name) {
             await updatedWaiter.updateOne({ name: req.body.name });
         }
@@ -178,7 +183,7 @@ router.patch("/:id", async (req, res, next) => {
 ///DESTROY
 router.delete("/:id", async (req, res, next) => {
     try {
-        deletedWaiter = await waiter.findByIdAndDelete(req.params.id).exec();
+        deletedWaiter = await Waiter.findByIdAndDelete(req.params.id).exec();
         res.json(deletedWaiter);
     } catch (err) {
         return next(err);

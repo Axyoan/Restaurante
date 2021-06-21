@@ -56,6 +56,7 @@ router.get("/:id", async (req, res, next) => {
 ///CREATE
 router.post("/", async (req, res, next) => {
     try {
+        console.log(req.body);
         validateFields(req);
         const newDish = new Dish(req.body);
         await Dish.create(newDish);
@@ -83,6 +84,19 @@ router.put("/:id", async (req, res, next) => {
     }
 });
 
+router.put("/:id", async (req, res, next) => {
+    try {
+        console.log("Dish Put")
+        validateId(req.params.id);
+        const updatedDish = await Dish.findByIdAndUpdate(req.params.id, req.body).exec();
+        res.json(updatedDish)
+    } catch (err) {
+        console.log(err);
+        if (err instanceof ReqError)
+            return res.status(err.status).send(err.msg);
+        return next(err);
+    }
+});
 
 //PATCH
 router.patch("/:id", async (req, res, next) => {

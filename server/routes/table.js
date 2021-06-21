@@ -19,7 +19,11 @@ const validateId = async (id) => {
 const validateFields = (req) => {
     const code = req.body.code;
     const number = req.body.number;
-
+    if (!number) {
+        console.log("Missing information");
+        throw new ReqError("Missing information", 400);
+    }
+    /*
     if (!code || !number) {
         console.log("Missing information");
         throw new ReqError("Missing information", 400);
@@ -28,52 +32,55 @@ const validateFields = (req) => {
         console.log("Not a valid code");
         throw new ReqError("Not a valid code", 400);
     }
+    */
     ///Missing validation for dishes inside arrays
     console.log("data validated");
     return true;
 }
 
-const updateWaiters = async (waiters, table) => {
-    if (!waiters || !waiters.length) {
-        return;
-    }
-    for (const w of waiters) {
-        const waiter = await Waiter.findById(w.waiterId);
-        const exists = waiter.assignedTables && waiter.assignedTables.length !== 0 && waiter.assignedTables.find(e => e.tableId === table._id.toString())
-        if (!exists) {
-            const newTables = [
-                ...waiter.assignedTables,
-                { tableId: table._id.toString() }
-            ]
-            const updatedWaiter = await waiter.updateOne({ assignedTables: newTables });
-        }
-    }
-}
-
 const updateTables = async (waiters, table) => {
-    const newWaiters = [
-        ...table.assignedWaiters,
-        ...waiters.map(w => {
-            return { waiterId: w.waiterId }
-        }).filter(w => {
-            const found = table.assignedWaiters.find(t => {
-                return t.waiterId === w.waiterId;
-            });
-            return !found;
-        })
-    ]
-    await table.updateOne({ assignedWaiters: newWaiters });
+    if (waiters) {
+        /**
+         const newWaiters = [
+            ...table.assignedWaiters,
+            ...waiters.map(w => {
+                return { waiterId: w.waiterId }
+            }).filter(w => {
+                const found = table.assignedWaiters.find(t => {
+                    return t.waiterId === w.waiterId;
+                });
+                return !found;
+            })
+        ]
+         */
+
+        const newWaiters = [
+            ...waiters.map(w => {
+                return { waiterId: w.waiterId }
+            })
+        ]
+        await table.updateOne({ assignedWaiters: newWaiters });
+    }
     console.log("updated Tables");
 }
-
 
 ///INDEX
 router.get("/", async (req, res, next) => {
     try {
-        const { code: qcode } = req.query;
-        if (qcode) {
-            const table = await Table.findOne({ code: qcode }).exec();
+        const { code: queryCode } = req.query;
+        const { number: queryNumber } = req.query;
+        const { section: querySection } = req.query;
+        if (queryCode) {
+            const table = await Table.findOne({ code: queryCode }).exec();
             return res.json(table);
+        }
+        if (queryNumber) {
+            const table = await Table.findOne({ number: queryNumber }).exec();
+            return res.json(table);
+        }
+        if (querySection) {
+            const tables = await Table.find({ section: querySection }).exec();
+            return res.json(tables);
         }
         const tables = await Table.find({}).exec();
         res.json(tables);
@@ -102,6 +109,21 @@ router.post("/", async (req, res, next) => {
     try {
         validateFields(req);
         const newTable = new Table(req.body);
+        let codeAlreadyExists = true;
+        let newCode = "AAAA";
+        while (codeAlreadyExists) {
+            newCode = '';
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            for (let i = 0; i < 4; i++) {
+                newCode += characters.charAt(Math.floor(Math.random() *
+                    characters.length));
+            }
+            const table = await Table.findOne({ code: newCode }).exec();
+            if (table === null) {
+                codeAlreadyExists = false;
+            }
+        }
+        newTable.code = newCode;
         await newTable.save();
         res.json(newTable);
     } catch (err) {
@@ -118,7 +140,6 @@ router.put("/:id", async (req, res, next) => {
         validateFields(req);
         const table = await Table.findById(req.params.id);
         await updateTables(req.body.assignedWaiters, table);
-        await updateWaiters(req.body.assignedWaiters, table);
         const updatedTable = await Table.findByIdAndUpdate(req.params.id, req.body).exec();
         res.json(updatedTable);
     } catch (err) {
@@ -134,7 +155,6 @@ router.patch('/:id', async (req, res, next) => {
         const table = await Table.findById(req.params.id);
         if (req.body.assignedWaiters) {
             await updateTables(req.body.assignedWaiters, table);
-            await updateWaiters(req.body.assignedWaiters, table);
         }
         if (req.body.code) {
             await table.updateOne({ code: req.body.code });
@@ -169,6 +189,18 @@ router.patch('/:id', async (req, res, next) => {
 router.delete("/:id", async (req, res, next) => {
     try {
         validateId(req.params.id);
+        const tableToDelete = await Table.findById(req.params.id).exec();
+        for (const w of tableToDelete.assignedWaiters) {
+            console.log(w);
+            const waiterToUpdate = await Waiter.findById(w.waiterId);
+            const newAssignedTables = [
+                ...waiterToUpdate.assignedTables.filter(t => {
+                    return t.tableId != req.params.id;
+                })
+            ];
+            console.log(newAssignedTables);
+            await waiterToUpdate.updateOne({ assignedTables: newAssignedTables });
+        }
         const deletedTable = await Table.findByIdAndDelete(req.params.id).exec();
         res.json(deletedTable);
     } catch (err) {

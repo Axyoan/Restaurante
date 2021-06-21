@@ -22,7 +22,12 @@ const WaiterSchema = new Schema({
             type: String,
             enum: ['cuenta', 'ayuda', 'orden']
         },
-        orderId: String,
+        tableNumber: String,
+        tableCode: String,
+        orderId:{
+            type: String,
+            default: null
+        },
         resolved: Boolean,
     }
     ]

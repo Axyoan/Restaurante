@@ -5,6 +5,10 @@ const Schema = mongoose.Schema;
 const TableSchema = new Schema({
     code: { type: String, unique: true, required: true },
     number: { type: String, unique: true, required: true },
+    section: {
+        type: String,
+        enum: ['rojo', 'amarillo', 'verde', 'azul', 'naranja']
+    },
     bill: {
         dishes: [
             {
@@ -16,7 +20,7 @@ const TableSchema = new Schema({
         ]
     },
     ///pendingOrders = [{orderId, dishes = []}]
-    pendingOrders:  
+    pendingOrders:
         ///default: [{ orderId: "", dishes: [] }],
         [{
             orderId: String,

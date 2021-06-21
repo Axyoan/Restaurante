@@ -5,8 +5,11 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 function NotificationButton(props) {
     return (
         <>
+            {/*<NotificationsIcon color={props.color}/> 
+            
+            */}
             <StyledNotificationButton onClick={props.onClick}>
-                <NotificationsIcon color={props.color}/>
+                <NotificationsIcon style={{ color: props.color === 'gray' ? '#babab1' : '#FCBF49' }} />
             </StyledNotificationButton>
         </>
     );

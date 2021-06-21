@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
+import axios from "axios";
 import { useHistory } from "react-router-dom";
 import Modal from 'react-modal';
 import Header from "../../components/header";
@@ -7,60 +8,83 @@ import Button from "../../components/button";
 import SimpleCard from "../../components/simpleCard";
 import DishCard from "../../components/dishCard";
 import BackButton from "../../components/backButton"
-import { ColumnContainer, RowContainer, RowContainer2,StyledCard} from "../../styles/core"
-import { StyledSearchTextInput} from '../../styles/inputs.js'
+import { ColumnContainer, RowContainer, RowContainer2, StyledCard } from "../../styles/core"
+import { StyledSearchTextInput } from '../../styles/inputs.js'
 
 Modal.setAppElement('#root');
 
-function ManageDishes() {
-    const history = useHistory();
+function ManageDishes(props) {
+    const [dishList, setDishList] = useState([])
 
-    const loadDishes = () => {
+    const history = useHistory();
+    const { state: waiterId } = props.location;
+
+    function DishList() {
         return (
             <ColumnContainer>
-                <SimpleCard text="Guacamole" onClick={()=>{
-                    history.push({
-                        pathname: '/updateD',
-                        state: {
-                            data: 'Guacamole'}})}}/>
-               
-                <SimpleCard text="Queso fundido" onClick={()=>{
-                    history.push({
-                        pathname: '/updateD',
-                        state: {
-                            data: 'Queso fundido'}})}}/>
-                
-                <SimpleCard text="Fetuccini" onClick={()=>{
-                    history.push({
-                        pathname: '/updateD',
-                        state: {
-                            data: 'Fetuccini'}})}}/>
-
+                {dishList.map((d, i) => {
+                    return (<DishCard
+                        key={d.key}
+                        name={d.name}
+                        price={d.price}
+                        description={d.description}
+                        onClick={() => {
+                            history.push({
+                                pathname: '/updateD',
+                                state: {
+                                    key: d.key,
+                                    name: d.name,
+                                    price: d.price,
+                                    description: d.description,
+                                    category: d.category,
+                                    waiterId: waiterId
+                                }
+                            })
+                        }}
+                    />);
+                })}
             </ColumnContainer>
-         
         );
     };
 
+    const loadDishes = async () => {
+        console.log("loadDishes")
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}dishes/`);
+        const dishes = res.data;
+        const newDishList = [
+            ...dishes.map(d => {
+                return {
+                    key: d._id,
+                    name: d.name,
+                    price: d.price,
+                    description: d.description,
+                    category: d.category
+                }
+            })
+        ];
+        setDishList(newDishList);
+        console.log(newDishList);
+    }
+
+    useEffect(() => {
+        console.log("Mounted");
+        loadDishes();
+    }, [])
 
     return (
         <>
             <Header />
             <RowContainer2>
-                <BackButton color ="green" onClick={()=>{history.push('/mainW')}}/>
-                <SubHeader text= "Administrar platillos"/>
+                <BackButton color="green" onClick={() => { history.push({ pathname: '/mainW', state: waiterId }) }} />
+                <SubHeader text="Administrar platillos" />
             </RowContainer2>
 
             <ColumnContainer>
-                <Button text= "Añadir nuevo platillo" color="orange" onClick={()=>{history.push('/addNewD')}}/>
-                {
-                    <RowContainer2>
-                        <StyledSearchTextInput />
-                        <Button text= "Buscar" color="orange"/>
-                    </RowContainer2>
-                }
-                {loadDishes()}
+                <Button text="Añadir nuevo platillo" color="orange"
+                    onClick={() => { history.push({ pathname: '/addNewD', state: waiterId }) }} />
+                <DishList />
             </ColumnContainer>
-          
+
         </>
     );
 }

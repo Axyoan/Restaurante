@@ -64,6 +64,15 @@ export const RowContainer2 = styled.div`
     column-gap: 2em;
 `;
 
+export const RowContainerSB = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    column-gap: 2em;
+`;
+
+
 export const StyledButton = styled.button`
     cursor: pointer;
     border: none;
@@ -428,6 +437,7 @@ export const StyledSubHeader = styled.header`
     padding: 18px;
     box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
     background: #FCBF49;
+    border-radius: 0 0 0 45px;
     h1{
         font-family: Montserrat;
         font-size: 15px;
@@ -445,7 +455,7 @@ export const StyledSimpleCard = styled.div`
     justify-content: space-between;
     align-items: center;
     padding: 10px 15px;
-    width: 120px;
+    width: 200px;
     height: 40px;
     top: 43px;
     font-size: 18px;
@@ -456,7 +466,6 @@ export const StyledSimpleCard = styled.div`
     border-radius: 35px;
     transition: background-color .15s ease-out;
     cursor: pointer;
-    
 `;
 
 export const StyledSimpleCard2 = styled.div`
@@ -464,9 +473,10 @@ export const StyledSimpleCard2 = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 10px 10px;
+    text-align: center;
+    padding: 15px 10px;
     height: 25%;
-    width: 40px;
+    width: 60px;
     font-size: 20px;
 
     background-color:${props => (props.color === "red" ? "#D62828" : (props.color === "orange" ? "#F77F00" : (props.color === "blue" ? "#003049" : (props.color === "green" ? "#EAE2B7" : (props.color === "yellow" ? "#FFD358" : "#ffffff")))))};
@@ -491,7 +501,7 @@ export const StyledSquareColor = styled.button`
     transition: background-color .15s ease-out;
     box-shadow: 2px 2px 2px #000;
     &:active{
-        box-shadow: 0px 0px 0px 2px ${props => (props.color === "red" ? "#D62828" : (props.color === "orange" ? "#F77F00" : (props.color === "blue" ? "#003049" : (props.color === "green" ? "#EAE2B7" :  (props.color === "yellow" ? "#FFD358" : "#ffffff")))))};
+        box-shadow: 0px 0px 0px 2px ${props => (props.color === "red" ? "#D62828" : (props.color === "orange" ? "#F77F00" : (props.color === "blue" ? "#003049" : (props.color === "green" ? "#EAE2B7" : (props.color === "yellow" ? "#FFD358" : "#ffffff")))))};
     }
 `;
 
@@ -508,7 +518,7 @@ export const StyledNotiCard = styled.button`
     padding-left: 25px;
     padding-right: 25px;
     font-size: 16px;
-    width: 180px;
+    width: 100px;
     justify-content: space-between;
     box-shadow: 1px 1px 1px #000;
     transition: background-color .15s ease-out;
