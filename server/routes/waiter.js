@@ -6,6 +6,7 @@ const nodemailer = require('nodemailer');
 const generator = require('generate-password');
 require("../reqError");
 const Waiter = require('../models/waiter');
+const Table = require('../models/table');
 
 
 validateId = async (id) => {
@@ -183,7 +184,20 @@ router.patch("/:id", async (req, res, next) => {
 ///DESTROY
 router.delete("/:id", async (req, res, next) => {
     try {
-        deletedWaiter = await Waiter.findByIdAndDelete(req.params.id).exec();
+        validateId(req.params.id);
+        const waiterToDelete = await Waiter.findById(req.params.id).exec();
+        for (const t of waiterToDelete.assignedTables) {
+            console.log(t);
+            const tableToUpdate = await Table.findById(t.tableId);
+            const newAssignedWaiters = [
+                ...tableToUpdate.assignedWaiters.filter(t => {
+                    return t.waiterId != req.params.id;
+                })
+            ];
+            console.log(newAssignedWaiters);
+            await tableToUpdate.updateOne({ assignedWaiters: newAssignedWaiters });
+        }
+        const deletedWaiter = await Waiter.findByIdAndDelete(req.params.id).exec();
         res.json(deletedWaiter);
     } catch (err) {
         return next(err);
