@@ -164,6 +164,7 @@ function Main(props) {
             const res = await axios.get(
                 `${process.env.REACT_APP_API_URL}waiters/?tableId=${table._id}`);
             const assignedWaiters = res.data;
+            console.log(bill);
             for (const waiter of assignedWaiters) {
                 await axios.patch(
                     `${process.env.REACT_APP_API_URL}waiters/${waiter._id}`,
@@ -173,6 +174,16 @@ function Main(props) {
                             tableNumber: table.number,
                             tableCode: table.code,
                             orderId: null,
+                            bill: {
+                                dishes: [...bill.map(d => {
+                                    return {
+                                        dishId: d.dishId,
+                                        name: d.name,
+                                        quantity: d.quantity,
+                                        price: d.price
+                                    }
+                                })]
+                            },
                             resolved: false,
                         }]
                     })
@@ -313,11 +324,11 @@ function Main(props) {
                 </StyledBillTable>
                 <div>
                     IVA:...
-                {iva}
+                    {iva}
                 </div>
                 <div>
                     Total:...
-                {total}
+                    {total}
                 </div>
             </>
         );
@@ -405,7 +416,7 @@ function Main(props) {
             >
                 <h4>
                     Añadir al pedido:
-                    </h4>
+                </h4>
                 {dish && dish.name}
                 <StyledHr />
                 <RowContainer>

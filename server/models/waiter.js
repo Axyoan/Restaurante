@@ -24,9 +24,19 @@ const WaiterSchema = new Schema({
         },
         tableNumber: String,
         tableCode: String,
-        orderId:{
+        orderId: {
             type: String,
             default: null
+        },
+        bill: {
+            dishes: [
+                {
+                    dishId: String,
+                    name: String,
+                    quantity: Number,
+                    price: Number
+                }
+            ]
         },
         resolved: Boolean,
     }

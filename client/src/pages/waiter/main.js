@@ -20,10 +20,12 @@ function Main(props) {
     const [isHeadWaiter, setIsHeadWaiter] = useState(false);
     const [yourTablesModal, setYourTablesModallIsOpen] = useState(false);
     const [orderDetailsModal, setOrderDetailsModallIsOpen] = useState(false);
+    const [billModalIsOpen, setBillModalIsOpen] = useState(false);
     const [notifications, setNotifications] = useState([]);
     const [tables, setTables] = useState([]);
     const [assignedTables, setAssignedTables] = useState([]);
     const [currentOrderId, setCurrentOrderId] = useState(false);
+    const [bill, setBill] = useState(null);
     const { state: waiterId } = props.location;
 
     const openNotificationModal = async () => {
@@ -40,9 +42,20 @@ function Main(props) {
     const openYourTablesModal = () => {
         setYourTablesModallIsOpen(true);
     }
+
     const closeYourTablesModal = () => {
         setYourTablesModallIsOpen(false);
     }
+
+    const openBillModal = (billInfo) => {
+        setBill(billInfo);
+        setBillModalIsOpen(true);
+    }
+
+    const closeBillModal = () => {
+        setBillModalIsOpen(false);
+    }
+
     const openOrderDetailsModal = (id) => {
         setCurrentOrderId(id);
         setOrderDetailsModallIsOpen(true);
@@ -93,6 +106,35 @@ function Main(props) {
         </>);
     }
 
+    const BillInfo = () => {
+        console.log(bill);
+        return (<>
+            <StyledTable>
+                <thead>
+                    <tr>
+                        <td>#</td>
+                        <td></td>
+                        <td>Platillo</td>
+                        <td>$</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {bill.dishes.map(d => {
+                        return (<tr>
+                            <td>{d.quantity}</td>
+                            <td></td>
+                            <td>{d.name}</td>
+                            <td>${d.price}</td>
+                        </tr>);
+                    })}
+                </tbody>
+            </StyledTable>
+            <ColumnContainer2>
+                <Button text="Ok" color="green" onClick={closeBillModal} />
+            </ColumnContainer2>
+        </>);
+    }
+
     const deleteNotification = async (notificationId) => {
         console.log("deleteNotification");
         const newNotifications = [...notifications.filter(x => {
@@ -130,6 +172,9 @@ function Main(props) {
                                 onClick={() => {
                                     if (x.category === "orden") {
                                         return openOrderDetailsModal(x.orderId);
+                                    }
+                                    if (x.category === "cuenta") {
+                                        return openBillModal(x.bill);
                                     }
                                 }} />
                             </td>
@@ -257,6 +302,16 @@ function Main(props) {
                 <OrderDetails />
             </Modal>
 
+            {/*BILL MODAL-------------------- */}
+            <Modal
+                isOpen={billModalIsOpen}
+                onRequestClose={closeBillModal}
+                style={OrderModal}
+            >
+                <StyledH3>Cuenta</StyledH3>
+                <StyledHr />
+                <BillInfo />
+            </Modal>
         </>
     );
 }
